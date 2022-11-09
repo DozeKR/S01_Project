@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     public float speed = 3f;
     Vector2 vec;
     bool rotation;
+    // Enemy 종류
+    public bool attack;
     // 초기화 메서드
     public void init(Transform playerTransform)
     {
@@ -39,21 +41,43 @@ public class Enemy : MonoBehaviour
     {
         // 플레이어로의 방향 벡터 구하기
         vec = playerTransform.position - enemyTransform.position;
-        if (vec.x > 0)
+        if (attack)
         {
-            rotation = true;
+            if (vec.x < 0)
+            {
+                rotation = true;
+            }
+            else
+            {
+                rotation = false;
+            }
         }
         else
         {
-            rotation = false;
+            if (vec.x > 0)
+            {
+                rotation = true;
+            }
+            else
+            {
+                rotation = false;
+            }
         }
+   
         // 벡터를 단위벡터화 시킨다.
         vec.Normalize();
     }
 
     void Move()
     {
-        enemyRigidbody.velocity = vec * speed;
+        if(attack)
+        {
+            enemyRigidbody.velocity = vec * speed;
+        }
+        else
+        {
+            enemyRigidbody.velocity = -vec * speed;
+        }
         if (!rotation)
         {
             rend.flipX = true;

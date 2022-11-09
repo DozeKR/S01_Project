@@ -43,6 +43,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject enemy = Instantiate(selectedEnemy, spawnPos, Quaternion.identity);
         Enemy es = enemy.GetComponent<Enemy>();
         es.init(playerTransform);
+      
     }
     Vector2 GetRandomPoint(Vector2 center, float distance)
     {
